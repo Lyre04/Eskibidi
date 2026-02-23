@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang! 🎂</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Updated to a warmer Birthday palette */
+            --pastel-peach: #ffedda;
+            --soft-bg: #fffaf5;
+            --accent-gold: #e6b800;
+            --main-color: #ff8fa3; /* Keeping a bit of pink for the "Sayang" vibe */
+            --text-color: #5d4a4a;
+        }
+
+        body {
+			margin: 0;
+			min-height: 100vh;
+            background-color: var(--soft-bg);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+/* --- GIFS (Updated to Birthday Themes) --- */
+.side-gif {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    height: auto;
+    z-index: 5;
+    pointer-events: none;
+    filter: drop-shadow(0 0 10px rgba(230, 184, 0, 0.2));
+	animation: floatingGifs 3s ease-in-out infinite;
+}
+
+@keyframes floatingGifs {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-55%) translateX(5px); }
+}
+
+.left-gif { left: 40px; }
+.right-gif { right: 40px; }
+
+@media (max-width: 1100px) { .side-gif { width: 150px; } }
+@media (max-width: 800px) {
+    .side-gif { 
+        width: 100px; 
+        opacity: 0.6;
+    }
+}
+
+        /* --- Envelope Styles --- */
+        .envelope-wrapper {
+            cursor: pointer;
+            position: absolute;
+            z-index: 100;
+            transition: all 0.5s ease;
+        }
+
+        .envelope {
+			position: relative;
+			width: min(60vw, 200px);
+			height: calc(min(60vw, 200px) * 0.75);
+            background-color: var(--pastel-peach);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 10px 25px rgba(230, 184, 0, 0.2);
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-top: 100px solid var(--main-color);
+            border-right: 100px solid transparent;
+            border-left: 100px solid transparent;
+            transform-origin: top;
+            transition: transform 0.5s 0.3s ease;
+        }
+
+        .envelope::after {
+            content: "";
+            position: absolute;
+            z-index: 2;
+            width: 0; height: 0;
+            border-top: 80px solid transparent;
+            border-right: 100px solid #f7d7b2;
+            border-bottom: 80px solid var(--pastel-peach);
+            border-left: 100px solid #f7d7b2;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .letter-preview {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 90%;
+			height: 65%;
+            background: white;
+            border-radius: 5px;
+            z-index: 1;
+            transition: all 0.5s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--main-color);
+            font-family: 'Dancing Script', cursive;
+            font-size: 20px;
+        }
+
+        .envelope-wrapper.open .envelope::before { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter-preview { transform: translateY(-100px); z-index: 2; height: 120px; }
+        .envelope-wrapper.open { transform: scale(0.8) translateY(-50px); opacity: 0; pointer-events: none; transition: all 0.5s 0.8s ease; }
+
+        /* --- Main Card --- */
+        .card {
+            background: white;
+			padding: clamp(20px, 5vw, 40px);
+			border-radius: 30px;
+			box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+			text-align: center;
+			max-width: 450px;
+			width: 95%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s 1.2s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .card.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+
+        .title { font-family: 'Dancing Script', cursive; font-size: 32px; color: var(--main-color); margin-bottom: 20px; }
+        .message-container { font-size: 16px; color: var(--text-color); line-height: 1.8; text-align: left; display: none; }
+
+        #special-tag {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--main-color);
+            margin-top: 20px;
+            text-align: right;
+            opacity: 0;
+        }
+
+        .fade-in-text { animation: tagFadeIn 2s forwards; }
+
+        @keyframes tagFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating elements (Updated to Confetti/Stars vibe) */
+        .heart { position: absolute; color: var(--main-color); opacity: 0.5; animation: float 4s infinite linear; pointer-events: none; z-index: 1; }
+        @keyframes float { 0% { transform: translateY(105vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); } }
+		
+		@media (max-width: 600px) { .side-gif { display: none; } }
+		@media (max-width: 600px) {
+            .message-container { font-size: 14px; }
+            .title { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcW8xd3Z6Nms5bXAzYmR6Znl3ZzN3Znl3ZzN3Znl3ZzN3Znl3ZzN3ZmxvJmVwPXYxX2dpZnNfc2VhcmNoJmN0PWc/KZG3HjhDZPiMGkh3xm/giphy.gif" class="side-gif left-gif" alt="birthday-cake">
+    
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56Z3Y5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnZ6JmVwPXYxX2dpZnNfc2VhcmNoJmN0PWc/g5R96zhGrLcmis9md6/giphy.gif" class="side-gif right-gif" alt="party-cat">
+
+    <audio id="bgMusic" loop>
+        <source src="https://litter.catbox.moe/r5tnphbd60ccuyl6.mp3" type="audio/mpeg">
+	</audio>
+
+    <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="letter-preview">For the Birthday Girl ❤️</div>
+        </div>
+    </div>
+
+    <div class="card" id="card">
+        <div class="title">Happy Birthday, My Sayang! 🎂</div>
+        
+        <div class="message-container" id="messageBox">
+            <div id="text"></div>
+            <div id="special-tag">— Your Favorite Person</div>
+        </div>
+    </div>
+
+    <script>
+        const messageText = `Happy Birthday to the most special person in my life! 🎉 
+
+I'm so incredibly lucky to have you by my side. I hope your day is filled with all the love, laughter, and cake you deserve! 
+
+Thank you for being you—for your kindness, your smile, and for making every day brighter. May this new year of your life bring you endless happiness and success in everything you do.
+
+I can't wait to celebrate many more birthdays with you. Enjoy your special day to the fullest!
+
+I love you so much ❤️`;
+
+    function openEnvelope() {
+        const wrapper = document.getElementById("envelopeWrapper");
+        const card = document.getElementById("card");
+        const music = document.getElementById("bgMusic");
+
+        music.load(); 
+        music.play().catch(error => console.log("Audio play blocked. Click again."));
+
+        wrapper.classList.add("open");
+
+        setTimeout(() => {
+            card.classList.add("active");
+            document.getElementById("messageBox").style.display = "block";
+            typeMessage();
+        }, 1000);
+    }
+
+    let charIndex = 0;
+    function typeMessage() {
+        if (charIndex < messageText.length) {
+            let char = messageText.charAt(charIndex);
+            document.getElementById("text").innerHTML += char === "\n" ? "<br>" : char;
+            charIndex++;
+            setTimeout(typeMessage, 40);
+        } else {
+            document.getElementById("special-tag").classList.add("fade-in-text");
+        }
+    }
+
+    function createFloatingIcon() {
+        const icons = ["❤", "✨", "🎂", "🎈", "✨"];
+        const item = document.createElement("div");
+        item.classList.add("heart");
+        item.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.fontSize = Math.random() * 15 + 15 + "px";
+        item.style.animationDuration = Math.random() * 2 + 3 + "s";
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 5000);
+    }
+    setInterval(createFloatingIcon, 400);
+
+    </script>
+</body>
+</html>
