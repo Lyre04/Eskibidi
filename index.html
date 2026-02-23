@@ -20,12 +20,11 @@
             scroll-behavior: smooth;
         }
 
-        /* --- Smooth Background Animation --- */
         @keyframes smoothBg {
-            0% { background-color: #fff5eb; } /* Peach */
-            33% { background-color: #fff0f3; } /* Soft Pink */
-            66% { background-color: #f3f0ff; } /* Soft Lavender */
-            100% { background-color: #fff5eb; } /* Back to Peach */
+            0% { background-color: #fff5eb; } 
+            33% { background-color: #fff0f3; } 
+            66% { background-color: #f3f0ff; } 
+            100% { background-color: #fff5eb; } 
         }
 
         body {
@@ -34,12 +33,10 @@
             font-family: 'Quicksand', sans-serif;
             color: var(--text);
             overflow-x: hidden;
-            /* Applying the animation here */
             animation: smoothBg 15s ease-in-out infinite;
             transition: background-color 1s ease;
         }
 
-        /* --- Landing / Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -47,7 +44,6 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Changed to transparent so the body animation shows */
             background: transparent; 
             position: relative;
         }
@@ -85,7 +81,7 @@
             transform: scale(1.05);
         }
 
-        /* --- Letter Section --- */
+        /* --- Letter --- */
         .content-section {
             min-height: 100vh;
             padding: 80px 20px;
@@ -122,7 +118,7 @@
             transition: opacity 1s;
         }
 
-        /* --- Wishes Grid --- */
+        /* --- Grid --- */
         .wishes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -148,7 +144,7 @@
         .wish-card strong { color: var(--primary-pink); display: block; margin-bottom: 8px; font-size: 1.1rem; }
         .wish-card p { font-size: 0.9rem; margin: 0; line-height: 1.4; }
 
-        /* --- Floating Elements --- */
+        /* --- Ele --- */
         .floating {
             position: fixed;
             pointer-events: none;
