@@ -19,13 +19,23 @@
             scroll-behavior: smooth;
         }
 
+        /* --- Smooth Background Animation --- */
+        @keyframes smoothBg {
+            0% { background-color: #fff5eb; } /* Peach */
+            33% { background-color: #fff0f3; } /* Soft Pink */
+            66% { background-color: #f3f0ff; } /* Soft Lavender */
+            100% { background-color: #fff5eb; } /* Back to Peach */
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Quicksand', sans-serif;
-            background-color: var(--soft-peach);
             color: var(--text);
             overflow-x: hidden;
+            /* Applying the animation here */
+            animation: smoothBg 15s ease-in-out infinite;
+            transition: background-color 1s ease;
         }
 
         /* --- Landing / Hero Section --- */
@@ -36,7 +46,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(180deg, #fff0f3 0%, var(--soft-peach) 100%);
+            /* Changed to transparent so the body animation shows */
+            background: transparent; 
             position: relative;
         }
 
@@ -46,6 +57,7 @@
             color: var(--primary-pink);
             margin-bottom: 10px;
             z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
         .hero p {
@@ -82,7 +94,7 @@
         }
 
         .letter-container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -96,6 +108,7 @@
             font-size: 1.1rem;
             line-height: 2;
             min-height: 200px;
+            margin-bottom: 20px;
         }
 
         .signature {
@@ -103,7 +116,7 @@
             font-size: 2rem;
             color: var(--primary-pink);
             text-align: right;
-            margin-top: 40px;
+            margin-top: 20px;
             opacity: 0;
             transition: opacity 1s;
         }
@@ -121,11 +134,18 @@
             padding: 25px;
             border-radius: 20px;
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
         }
 
-        .wish-card:hover { transform: translateY(-5px); }
-        .wish-card i { font-size: 2rem; display: block; margin-bottom: 10px; }
+        .wish-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(255, 143, 163, 0.15);
+        }
+
+        .wish-card i { font-size: 2.2rem; display: block; margin-bottom: 12px; }
+        .wish-card strong { color: var(--primary-pink); display: block; margin-bottom: 8px; font-size: 1.1rem; }
+        .wish-card p { font-size: 0.9rem; margin: 0; line-height: 1.4; }
 
         /* --- Floating Elements --- */
         .floating {
@@ -154,21 +174,47 @@
 
         @media (max-width: 600px) {
             .gif-decoration { width: 80px; }
+            .wishes-grid { grid-template-columns: 1fr 1fr; } 
+            .wish-card { padding: 15px; }
+            .wish-card i { font-size: 1.8rem; }
         }
+		
+		.confetti {
+			position: fixed;
+			width: 8px;
+			height: 14px;
+			top: 50%;
+			left: 50%;
+			opacity: 0;
+			pointer-events: none;
+			z-index: 999;
+			animation: confetti-burst 1.2s ease-out forwards;
+		}
+
+		@keyframes confetti-burst {
+			0% {
+				transform: translate(0, 0) rotate(0deg);
+				opacity: 1;
+			}
+			100% {
+				transform: translate(var(--x), var(--y)) rotate(720deg);
+				opacity: 0;
+			}
+		}
     </style>
 </head>
 <body>
 
     <audio id="bgMusic" loop>
-        <source src="https://litter.catbox.moe/r5tnphbd60ccuyl6.mp3" type="audio/mpeg">
+        <source src="https://files.catbox.moe/93m2nx.mp3" type="audio/mpeg">
     </audio>
 
     <section class="hero" id="home">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56Z3Y5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnY5bnZ6JmVwPXYxX2dpZnNfc2VhcmNoJmN0PWc/g5R96zhGrLcmis9md6/giphy.gif" class="gif-decoration left" alt="party">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjltamF6emQ2cnFvNjFwd2Rva3E0MXcydXVkc3hha3FvNGd6ZmJrMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/izHMIhcjU2l7QWa1po/giphy.gif" class="gif-decoration left" alt="party">
         <h1>Happy Birthday, Sayang!</h1>
         <p>A little space on the internet just for you.</p>
         <button class="start-btn" onclick="startExperience()">Open Your Surprise</button>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcW8xd3Z6Nms5bXAzYmR6Znl3ZzN3Znl3ZzN3Znl3ZzN3Znl3ZzN3ZmxvJmVwPXYxX2dpZnNfc2VhcmNoJmN0PWc/KZG3HjhDZPiMGkh3xm/giphy.gif" class="gif-decoration right" alt="cake">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjJnOGF5Y25xYzgwY3Fsano0b3k4ZXYxcmxtOGN6NnhicW5xaDVqMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bWKy65WDyQ06GRnNC8/giphy.gif" class="gif-decoration right" alt="cake">
     </section>
 
     <section class="content-section" id="letter">
@@ -179,34 +225,37 @@
             <div class="wishes-grid">
                 <div class="wish-card"><i>🎂</i><strong>Stay Happy</strong><p>I hope your smile never fades away.</p></div>
                 <div class="wish-card"><i>✨</i><strong>Stay Bright</strong><p>May you achieve all your biggest dreams.</p></div>
-                <div class="wish-card"><i>❤</i><strong>Stay With Me</strong><p>To many more birthdays together.</p></div>
+                <div class="wish-card"><i>🌟</i><strong>Stay Successful</strong><p>Keep shining in everything you do.</p></div>
+				<div class="wish-card"><i>💞</i><strong>Stay With Me</strong><p>To many more birthdays together.</p></div>
+                <div class="wish-card"><i>🩷</i><strong>Don't Ever Leave Me</strong><p>I love you so much.</p></div>
+                <div class="wish-card"><i>💖</i><strong>Be Like Skibidi</strong><p>IDK WHY I WRITE THIS OMG.</p></div>
             </div>
+			
         </div>
     </section>
 
     <script>
         const messageText = `To my dearest Sayang,
 
-Today is all about you! I wanted to create something special that shows how much you mean to me. 
+Happy Birthday to my special girlfriend! 🎉 
 
-Happy Birthday! 🥳 You are the most incredible, kind, and beautiful person I know. Thank you for making my world so much brighter just by being in it.
+I'm so incredibly lucky to have you by my side. I hope your day is filled with all the love, laughter, and cake you deserve! 
 
-I hope this website brings a smile to your face. I wish for you a year filled with success, laughter, and all the things that make you happy. I'm always here to support you and cheer you on!
+Thank you for being you, for being very meow, for your smile, and for making my boring ahh every day brighter. 
+
+I hope this website brings a smile to your face. I wish for you a year filled with success, laughter, and all the things that make you happy. 
+
+I'm always here to support you and cheer you on!
 
 I love you more than words can say. ❤️`;
 
         function startExperience() {
-            // Play Music
             const music = document.getElementById("bgMusic");
-            music.play();
+            music.play().catch(e => console.log("Audio play needs interaction first"));
             
-            // Scroll to letter
             document.getElementById('letter').scrollIntoView({ behavior: 'smooth' });
             
-            // Start typing
             setTimeout(typeMessage, 800);
-            
-            // Hide the button so they don't click twice
             document.querySelector('.start-btn').style.display = 'none';
         }
 
@@ -219,6 +268,7 @@ I love you more than words can say. ❤️`;
                 setTimeout(typeMessage, 35);
             } else {
                 document.getElementById("signature").style.opacity = "1";
+				burstConfetti();
             }
         }
 
@@ -234,6 +284,31 @@ I love you more than words can say. ❤️`;
             setTimeout(() => item.remove(), 6000);
         }
         setInterval(createFloatingIcon, 500);
+		
+		function burstConfetti() {
+			const colors = ["#ff8fa3", "#e6b800", "#ffd6e0", "#ffc2d1", "#fff0f3"];
+			
+			for (let i = 0; i < 80; i++) {
+				const confetti = document.createElement("div");
+				confetti.classList.add("confetti");
+
+				confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+				const angle = Math.random() * 2 * Math.PI;
+				const distance = Math.random() * 300 + 100;
+
+				const x = Math.cos(angle) * distance + "px";
+				const y = Math.sin(angle) * distance + "px";
+
+				confetti.style.setProperty("--x", x);
+				confetti.style.setProperty("--y", y);
+
+				document.body.appendChild(confetti);
+
+				setTimeout(() => confetti.remove(), 1200);
+			}
+		}
+		
     </script>
 </body>
 </html>
